@@ -1,5 +1,5 @@
 from hero import Hero
-from random import random
+import random
 import numpy as np
 
 class Battleground:
@@ -46,4 +46,9 @@ class Battleground:
                 self.map[rand_col, rand_row] = (
                     fight_group_no if fight_group_no else self.fight_group_population
                 )
+
+    def move_character(self, start_location: tuple, end_location: tuple):
+        self.map[end_location] = self.map[start_location]
+        self.map[start_location] = 0
+        # check if character exists there already and whether it triggers a fight
 
