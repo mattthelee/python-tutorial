@@ -1,5 +1,6 @@
 from hero import Hero
 from random import random
+import numpy as np
 
 class Battleground:
     def __init__(
