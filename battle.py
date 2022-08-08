@@ -1,11 +1,10 @@
-from battleground import Battleground
-from hero.hero import Hero
-from hero.villain import Villain
-from potion.base_potion import BasePotion
-from potion.flight_potion import FlightPotion
-from potion.strength_potion import StrengthPotion
 import numpy as np
-
+import random
+from superhero import Hero
+from hero.villain import Villain
+from potion.flightpotion import FlightPotion
+from potion.strengthpotion import StrengthPotion
+from battleground import Battleground
 
 croydon = Battleground("Croydon", "London", "Rainy", 1000000, 5)
 print(croydon)
