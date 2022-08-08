@@ -1,4 +1,4 @@
-from basepotion import BasePotion
+from potion.base_potion import BasePotion
 
 
 class StrengthPotion(BasePotion):
