@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from hero import Hero
+from hero.hero import Hero
 
 
 class Battleground:

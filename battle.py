@@ -1,7 +1,9 @@
 from battleground import Battleground
-from hero import Hero
-from hero import Villain
-from potion import FlightPotion, StrengthPotion, BasePotion
+from hero.hero import Hero
+from hero.villain import Villain
+from potion.basepotion import BasePotion
+from potion.flight_potion import FlightPotion
+from potion.strength_potion import StrengthPotion
 import numpy as np
 
 
