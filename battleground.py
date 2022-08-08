@@ -1,9 +1,6 @@
-import numpy as np
 import random
-from superhero import Hero
-from hero.villain import Villain
-from potion.flightpotion import FlightPotion
-from potion.strengthpotion import StrengthPotion
+import numpy as np
+from hero.hero import Hero
 
 
 class Battleground:
@@ -50,4 +47,3 @@ class Battleground:
                 self.map[rand_col, rand_row] = (
                     fight_group_no if fight_group_no else self.fight_group_population
                 )
-
