@@ -47,3 +47,19 @@ class Battleground:
                 self.map[rand_col, rand_row] = (
                     fight_group_no if fight_group_no else self.fight_group_population
                 )
+
+    def move_character(self):
+        return
+    
+    def find_first_instance_of_character(self, character_name):
+        # given a character name, find the x and y coords on the map
+        x,y = np.argwhere(self.map == character_name)[0]
+        return x,y
+    
+    def switch_character(self):
+        # Take two characters, find them and switch their positions on the map
+        return 
+
+    def add_boundaries(self):
+        # Add a wall around the outer 
+        return 
