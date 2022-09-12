@@ -1,4 +1,6 @@
+from multiprocessing.sharedctypes import Value
 import random
+from re import X
 import numpy as np
 from hero.hero import Hero
 
@@ -50,16 +52,134 @@ class Battleground:
 
     def move_character(self):
         return
-    
+
     def find_first_instance_of_character(self, character_name):
         # given a character name, find the x and y coords on the map
-        x,y = np.argwhere(self.map == character_name)[0]
-        return x,y
-    
-    def switch_character(self):
+        x, y = np.argwhere(self.map == character_name)[0]
+        return x, y
+
+    def switch_character(self, character_one, character_two):
         # Take two characters, find them and switch their positions on the map
-        return 
+        character_one_x, character_one_y = np.argwhere(self.map == character_one)[0]
+        character_two_x, character_two_y = np.argwhere(self.map == character_two)[0]
+        self.map[character_one_x, character_one_y] = character_two
+        self.map[character_two_x, character_two_y] = character_one
+        return character_one, character_two
 
     def add_boundaries(self):
-        # Add a wall around the outer 
-        return 
+        # Add a wall around the outer
+        return
+
+    def amount_of_heroes(self):
+
+        amount = self.map
+        return np.unique(amount)
+
+    def check_for_character(self, character_name):
+        num = character_name
+        arr = self.map
+
+        return num in arr
+
+    def top_row(self):
+
+        row = self.map[0]
+        return row
+
+    def char_top_row(self, character_name):
+        num = character_name
+        row = self.map[0]
+
+        return num in row
+
+    def small_value(self):
+        small_value = np.min(self.map)
+        return small_value
+
+    def axis_find(self, x, y):
+        return self.map[y, x]
+
+    def move_character_down(self, character_name):
+
+        x, y = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y + 1
+        self.map[new_y, new_x] = character_name
+        self.map[x, y] = 0
+
+    def move_character_up(self, character_name):
+        x, y = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y - 1
+        self.map[new_y, new_x] = character_name
+        self.map[x, y] = 0
+
+    def move_character_left(self, character_name):
+        x, y = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y - 1
+        self.map[new_x, new_y] = character_name
+        self.map[x, y] = 0
+
+    def move_character_right(self, character_name):
+        x, y = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y + 1
+        self.map[new_x, new_y] = character_name
+        self.map[x, y] = 0
+
+    def move_character_right_2(self, character_name):
+        array_y = 5
+        x, y = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y + 1
+        if new_y < array_y:
+            self.map[new_x, new_y] = character_name
+            self.map[x, y] = 0
+
+        else:
+            print(f"The map is too small to move", character_name)
+
+    def move_character_left_2(self, character_name):
+        array_y = 5
+        x, y = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y - 1
+        if new_y < array_y:
+            self.map[new_x, new_y] = character_name
+            self.map[x, y] = 0
+
+        else:
+            print(f"The map is too small to move", character_name)
+
+    def move_character_up_2(self, character_name):
+        array_y = 5
+        x, y = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y - 1
+        if new_y < array_y:
+            self.map[new_y, new_x] = character_name
+            self.map[x, y] = 0
+        else:
+            print(f"The map is too small to move", character_name)
+
+    def shapetest(self, character_name):
+        array = self.map.shape
+        coords = self.find_first_instance_of_character(character_name)
+
+        new_x = coords[1]
+        new_y = coords[0] + 1
+
+        if new_y >= array[1]:
+            print(f"The map is too small to move", character_name)
+
+        else:
+            self.map[new_y, new_x] = character_name
+            self.map[coords] = 0
+
+        # if new_y < array[1]:
+        #  self.map[new_y, new_x] = character_name
+        #  self.map[coords] = 0
+
+    #  else:
+    #  print(f"The map is too small to move", character_name)
