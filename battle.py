@@ -23,33 +23,16 @@ hulk = Hero(
 )
 
 
-def populate_map(battleground):
-    my_map = battleground.map
-    my_map[2, 2] = 4
-    my_map[3, 3] = 5
-    my_map[1, 1] = 6
-    my_map[1, 4] = 7
-    my_map[1, 0] = 8
-    my_map[0, 4] = 9
-    return my_map
+croydon.add_character(hulk, 1,2)
+croydon.add_character(joker, 3,4)
+croydon.add_character(batman, 4,4)
 
 
-print(populate_map(croydon))
+print(croydon.map)
+croydon.move_character_up(1)
+croydon.move_character_left(2)
+croydon.move_character_down(3)
 
-croydon.move_character_up(4)
-croydon.move_character_up(4)
-croydon.move_character_up(4)
-croydon.move_character_up(4)
-croydon.move_character_up(4)
-croydon.move_character_up(4)
-croydon.move_character_up(4)
-croydon.move_character_left(7)
-croydon.move_character_left(7)
-croydon.move_character_left(7)
-croydon.move_character_left(7)
-croydon.move_character_left(7)
-croydon.move_character_left(7)
-croydon.move_character_left(7)
 
 
 print("------------------------")
