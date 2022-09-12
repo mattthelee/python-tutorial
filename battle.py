@@ -48,6 +48,8 @@ croydon.move_character_left(7)
 croydon.move_character_left(7)
 croydon.move_character_left(7)
 croydon.move_character_left(7)
+croydon.move_character_left(7)
+croydon.move_character_left(7)
 
 
 print("------------------------")
