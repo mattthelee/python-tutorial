@@ -153,11 +153,12 @@ class Battleground:
             print(f"The map is too small to move", character_name)
 
     def move_character_up_2(self, character_name):
-        array_y = 5
+        max_y = self.map.shape[0]
+        min_y = 0
         y, x = self.find_first_instance_of_character(character_name)
         new_x = x
         new_y = y - 1
-        if new_y < array_y:
+        if new_y <= max_y and new_y >= min_y:
             self.map[new_y, new_x] = character_name
             self.map[y,x] = 0
         else:
