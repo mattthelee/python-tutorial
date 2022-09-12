@@ -36,14 +36,17 @@ def populate_map(battleground):
 
 print(populate_map(croydon))
 
-
-croydon.move_character_down(6)
-croydon.move_character_up_2(4)
-croydon.move_character_up_2(4)
-croydon.move_character_up_2(4)
-croydon.move_character_up_2(4)
-croydon.move_character_up_2(4)
-croydon.move_character_up_2(4)
+croydon.move_character_up(4)
+croydon.move_character_up(4)
+croydon.move_character_up(4)
+croydon.move_character_up(4)
+croydon.move_character_up(4)
+croydon.move_character_up(4)
+croydon.move_character_up(4)
+croydon.move_character_left(7)
+croydon.move_character_left(7)
+croydon.move_character_left(7)
+croydon.move_character_left(7)
 croydon.move_character_left(7)
 
 
