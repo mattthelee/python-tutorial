@@ -20,18 +20,23 @@ class Battleground:
         self.character_dict_name = {}
         self.fight_group_population = 0
 
-
     def map_gen(self, size):
         return np.zeros([size, size])
 
     def __str__(self):
         return str(self.map)
 
-    def add_character(self, character: Hero, y_pos, x_pos):
-        self.fight_group_population += 1
+    def add_character(
+        self, character: Hero, y_pos, x_pos
+    ):  # can then run from battle.py, hero uses hero name from battle.py and then you can input own coors in the same section on battle.py (hulk, 2,1 etc)
+        self.fight_group_population += 1  # make the population per char 1
         self.character_dict[self.fight_group_population] = character
-        character.map_id = self.fight_group_population 
-        self.map[y_pos, x_pos] = self.fight_group_population
+        character.map_id = self.fight_group_population
+        self.map[
+            y_pos, x_pos
+        ] = (
+            self.fight_group_population
+        )  # takes the coords from char and takes population
 
     def move_character(self):
         return
@@ -128,7 +133,9 @@ class Battleground:
         if new_x <= max_x and new_x >= min_x:
             character_on_pos = self.map[new_y, new_x] != 0
             if character_on_pos:
-                print("too fight")
+                print(self.character_dict[character_name])
+                new_destination_name = self.map[new_y, new_x]
+                print(self.character_dict[new_destination_name])
             self.map[new_y, new_x] = character_name
             self.map[y, x] = 0
         else:
