@@ -1,10 +1,5 @@
-from gc import get_threshold
-import numpy as np
-import random
-from superhero import Hero
+from hero.hero import Hero
 from hero.villain import Villain
-from potion.flightpotion import FlightPotion
-from potion.strengthpotion import StrengthPotion
 from battleground import Battleground
 
 croydon = Battleground("Croydon", "London", "Rainy", 1000000, 5)

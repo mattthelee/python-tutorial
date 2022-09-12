@@ -55,8 +55,8 @@ class Battleground:
 
     def find_first_instance_of_character(self, character_name):
         # given a character name, find the x and y coords on the map
-        x, y = np.argwhere(self.map == character_name)[0]
-        return x, y
+        y, x = np.argwhere(self.map == character_name)[0]
+        return y, x
 
     def switch_character(self, character_one, character_two):
         # Take two characters, find them and switch their positions on the map
@@ -101,65 +101,65 @@ class Battleground:
 
     def move_character_down(self, character_name):
 
-        x, y = self.find_first_instance_of_character(character_name)
+        y, x= self.find_first_instance_of_character(character_name)
         new_x = x
         new_y = y + 1
         self.map[new_y, new_x] = character_name
-        self.map[x, y] = 0
+        self.map[y,x] = 0
 
     def move_character_up(self, character_name):
-        x, y = self.find_first_instance_of_character(character_name)
+        y, x = self.find_first_instance_of_character(character_name)
         new_x = x
         new_y = y - 1
         self.map[new_y, new_x] = character_name
-        self.map[x, y] = 0
+        self.map[y,x] = 0
 
     def move_character_left(self, character_name):
-        x, y = self.find_first_instance_of_character(character_name)
-        new_x = x
-        new_y = y - 1
-        self.map[new_x, new_y] = character_name
-        self.map[x, y] = 0
+        y, x = self.find_first_instance_of_character(character_name)
+        new_x = x - 1
+        new_y = y 
+        self.map[new_y, new_x] = character_name
+        self.map[y,x] = 0
 
     def move_character_right(self, character_name):
-        x, y = self.find_first_instance_of_character(character_name)
+        y, x = self.find_first_instance_of_character(character_name)
         new_x = x
         new_y = y + 1
-        self.map[new_x, new_y] = character_name
-        self.map[x, y] = 0
+        self.map[new_y, new_x] = character_name
+        self.map[y,x] = 0
 
     def move_character_right_2(self, character_name):
         array_y = 5
-        x, y = self.find_first_instance_of_character(character_name)
+        y, x = self.find_first_instance_of_character(character_name)
         new_x = x
         new_y = y + 1
         if new_y < array_y:
-            self.map[new_x, new_y] = character_name
-            self.map[x, y] = 0
+            self.map[new_y, new_x] = character_name
+            self.map[y,x] = 0
 
         else:
             print(f"The map is too small to move", character_name)
 
     def move_character_left_2(self, character_name):
         array_y = 5
-        x, y = self.find_first_instance_of_character(character_name)
+        y, x = self.find_first_instance_of_character(character_name)
         new_x = x
         new_y = y - 1
         if new_y < array_y:
-            self.map[new_x, new_y] = character_name
-            self.map[x, y] = 0
+            self.map[new_y, new_x] = character_name
+            self.map[y,x] = 0
 
         else:
             print(f"The map is too small to move", character_name)
 
     def move_character_up_2(self, character_name):
         array_y = 5
-        x, y = self.find_first_instance_of_character(character_name)
+        y, x = self.find_first_instance_of_character(character_name)
         new_x = x
         new_y = y - 1
         if new_y < array_y:
             self.map[new_y, new_x] = character_name
-            self.map[x, y] = 0
+            self.map[y,x] = 0
         else:
             print(f"The map is too small to move", character_name)
 
