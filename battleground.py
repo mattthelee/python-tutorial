@@ -143,6 +143,9 @@ class Battleground:
         new_x = x + 1
         new_y = y
         if new_x <= max_x and new_x >= min_x:
+            character_on_pos = self.map[new_y, new_x] != 0
+            if character_on_pos:
+                print("too fight")
             self.map[new_y, new_x] = character_name
             self.map[y, x] = 0
         else:
