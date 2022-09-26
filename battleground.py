@@ -5,7 +5,7 @@ import numpy as np
 from hero.hero import Hero
 
 
-class Battleground(Hero):
+class Battleground:
     def __init__(
         self, name: str, location: str, weather: str, population: int, size: int
     ):
@@ -189,6 +189,7 @@ class Battleground(Hero):
         if new_y <= max_y and new_y >= min_y:
             character_on_pos = self.map[new_y, new_x] != 0
             if character_on_pos:
+                Hero.fight
                 print(self.character_dict[character_name])
                 new_destination_name = self.map[new_y, new_x]
                 print(self.character_dict[new_destination_name])
@@ -196,3 +197,14 @@ class Battleground(Hero):
             self.map[y, x] = 0
         else:
             print(f"The map is too small to move", character_name)
+
+
+# add characters to map
+# using move_character right/left etc, then if statement
+# on if  new x/y has character_on_pos initiate fight
+# else move anyway using new_destination name/new x_y etc
+# if they fight the winner has new x_y and then loser could like +10 on x / y to make them out of bounds or just remove them?
+
+# when we move a character we need to check if charcter already on positon
+# , if there is a a character they need to fight to determine the winner and the winner gets the spot
+# , the loser will then need to be removed or the winners number will just be visible
