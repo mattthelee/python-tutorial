@@ -23,17 +23,16 @@ hulk = Hero(
 )
 
 
-croydon.add_character(hulk, 1,2)
-croydon.add_character(joker, 3,4)
-croydon.add_character(batman, 4,4)
+croydon.add_character(hulk, 1, 2)
+croydon.add_character(joker, 3, 4)
+croydon.add_character(batman, 4, 4)
 
 
 print(croydon.map)
 croydon.move_character_up(1)
 croydon.move_character_left(2)
 croydon.move_character_down(3)
-
-
+croydon.move_character_right(3)
 
 print("------------------------")
 print(croydon.map)
