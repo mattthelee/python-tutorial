@@ -1,9 +1,5 @@
-import numpy as np
-import random
-from superhero import Hero
+from hero.hero import Hero
 from hero.villain import Villain
-from potion.flightpotion import FlightPotion
-from potion.strengthpotion import StrengthPotion
 from battleground import Battleground
 
 croydon = Battleground("Croydon", "London", "Rainy", 1000000, 5)
@@ -26,29 +22,17 @@ hulk = Hero(
     "The Hulk", good=True, can_fly=False, strength=1000, special_ability=0, alive=True
 )
 
-for i in range(150):
-    croydon.add_character(batman, 1)
-    croydon.add_character(joker, 2)
-    croydon.add_character(hulk, 3)
 
-print(croydon)
-print(croydon.character_dict_name)
-
-no_of_batmans = np.where(croydon.map == 1)
-no_of_jokers = np.where(croydon.map == 2)
-no_of_hulks = np.where(croydon.map == 3)
-
-print(f"No of Batmans = {len(no_of_batmans[0])}")
-print(f"No of Jokers = {len(no_of_jokers[0])}")
-print(f"No of Hulks = {len(no_of_hulks[0])}")
+croydon.add_character(hulk, 1, 2)
+croydon.add_character(joker, 3, 4)
+croydon.add_character(batman, 4, 4)
 
 
-magic_flight_potion = FlightPotion()
-magic_strength_potion = StrengthPotion()
+print(croydon.map)
+croydon.move_character_up(1)
+croydon.move_character_left(2)
+croydon.move_character_down(3)
+croydon.move_character_right(3)
 
-batman.fight(joker)
-
-batman.turnevil(hulk)
-joker.drink_potion(magic_flight_potion)
-batman.drink_potion(magic_strength_potion)
-print(croydon.find_first_instance_of_character(3))
+print("------------------------")
+print(croydon.map)

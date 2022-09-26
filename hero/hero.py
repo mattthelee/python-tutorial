@@ -19,6 +19,7 @@ class Hero:
         self.alive = alive
         self.identity_found = identity_found
         self.arrested = arrested
+        self.map_id = None
 
     def fight(self, target_hero):
         # accepts another animal as an argument X
