@@ -87,7 +87,7 @@ class Battleground:
     def axis_find(self, x, y):
         return self.map[y, x]
 
-    def move_character_down(self, character_name):
+    def move_character_down(self, character_name, character_dict_name):
 
         max_y = self.map.shape[0] - 1
         min_y = 0
@@ -97,6 +97,12 @@ class Battleground:
         if new_y <= max_y and new_y >= min_y:
             character_on_pos = self.map[new_y, new_x] != 0
             if character_on_pos:
+                self.character_dict
+                moving_character = character_on_pos
+                destination_character = character_on_pos[character_dict_name]
+
+                moving_character.fight(destination_character)
+
                 print(self.character_dict[character_name])
                 new_destination_name = self.map[new_y, new_x]
                 print(self.character_dict[new_destination_name])
@@ -174,37 +180,43 @@ class Battleground:
         else:
             print(f"The map is too small to move", character_name)
 
-        # if new_y < array[1]:
-        #  self.map[new_y, new_x] = character_name
-        #  self.map[coords] = 0
+#my 7 substeps:
+#Which character is currently moving (store for later)
+#What is their current position?
+#Where is the character moving?
+#What id is at the destination position?
+#Check if that id is non-zero: if it's zero we just move there
+#What character is at the destination (need to use our self.character_dict to map between id and chracter)
+#Start fight between moving character and destination character
 
-    #  else:
-    #  print(f"The map is too small to move", character_name)
-    def move_character_test_fight(self, character_name):
-        max_y = self.map.shape[0] - 1
-        min_y = 0
-        y, x = self.find_first_instance_of_character(character_name)
+
+
+
+    def move_character_up(self, character_id):
+        y, x = self.find_first_instance_of_character(character_id)
         new_x = x
         new_y = y - 1
-        if new_y <= max_y and new_y >= min_y:
-            character_on_pos = self.map[new_y, new_x] != 0
-            if character_on_pos:
-                Hero.fight
-                print(self.character_dict[character_name])
-                new_destination_name = self.map[new_y, new_x]
-                print(self.character_dict[new_destination_name])
-            self.map[new_y, new_x] = character_name
-            self.map[y, x] = 0
+        destination_id = self.map[new_y, new_x]
+        check_id_is_nonzero = destination_id != 0
+        if check_id_is_nonzero:
+            # Do the fight
+            moving_character = self.character_dict[character_id]
+            destination_character = self.character_dict[destination_id]
+            winner_of_fight = moving_character.fight(destination_character)
+            # Move winner into the new position
+            # get the winning character (already done)
+            # get new position (already have)
+            # get winning character's id
+            winner_id = winner_of_fight.map_id
+            
+            # assign winning id to new position
+            self.map[new_y, new_x] = winner_id
+
+
+
+            # Loser character removed from map
+
         else:
-            print(f"The map is too small to move", character_name)
+            # Just move there
+            print("moved")
 
-
-# add characters to map
-# using move_character right/left etc, then if statement
-# on if  new x/y has character_on_pos initiate fight
-# else move anyway using new_destination name/new x_y etc
-# if they fight the winner has new x_y and then loser could like +10 on x / y to make them out of bounds or just remove them?
-
-# when we move a character we need to check if charcter already on positon
-# , if there is a a character they need to fight to determine the winner and the winner gets the spot
-# , the loser will then need to be removed or the winners number will just be visible
