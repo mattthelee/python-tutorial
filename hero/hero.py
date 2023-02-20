@@ -28,23 +28,25 @@ class Hero:
         # increases the weight of this animal X
         if target_hero.good and self.good:
             print(f"{self} didn't fight {target_hero}!")
-            return
+            return target_hero
 
         elif (not target_hero.can_fly) and self.can_fly:
             print(f"{self} flew away from {target_hero}")
-            return
+            return self
 
         elif target_hero.special_ability < self.special_ability:
             print(f"{self}'s special ability was too much work for {target_hero}")
-            return
+            return self
 
         elif target_hero.strength < self.strength:
             target_hero.alive = False
             print(f"{self} has killed {target_hero} ")
+            return self
 
         else:
             self.alive = False
             print(f"{self} had a fight with {target_hero} and lost")
+            return target_hero
 
     def turnevil(self, target_hero):
 
