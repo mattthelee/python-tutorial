@@ -18,6 +18,12 @@ def create_app():
 
 app = create_app()
 
+@app.get("/")
+async def main():
+    print('Hello ...')
+    time.sleep(5)
+    print('... World!')
+
 @app.get("/time")
 async def time():
     current_time = now.strftime("%H:%M:%S")
