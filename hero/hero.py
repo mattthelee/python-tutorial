@@ -32,7 +32,7 @@ class Hero:
 
         elif (not target_hero.can_fly) and self.can_fly:
             print(f"{self} flew away from {target_hero}")
-            return self
+            return target_hero
 
         elif target_hero.special_ability < self.special_ability:
             print(f"{self}'s special ability was too much work for {target_hero}")
@@ -42,7 +42,6 @@ class Hero:
             target_hero.alive = False
             print(f"{self} has killed {target_hero} ")
             return self
-
         else:
             self.alive = False
             print(f"{self} had a fight with {target_hero} and lost")
