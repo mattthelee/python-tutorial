@@ -1,6 +1,7 @@
-from fastapi import FastAPI, Body, Path, HTTPException
+from fastapi import FastAPI
 import time
 
+app = FastAPI()
 
 def create_app():
     app = FastAPI(
@@ -8,9 +9,8 @@ def create_app():
         description="training server",
         version="0.0.1",
     )
-  
-    @app.get("/")
-    async def main():
-      print('Hello ...')
-      time.sleep(5)
-      print('... World!')
+@app.get("/")
+async def main():
+    print('Hello ...')
+    time.sleep(5)
+    print('... World!')
