@@ -15,14 +15,16 @@ def create_app():
         description="training server",
         version="0.0.1",
     )
-
-app = create_app()
-
+    
+app.get("/say-hello")
+async def hello():
+    return {"message": "Hello World"}
+    
 @app.get("/time")
 async def time():
     current_time = now.strftime("%H:%M:%S")
     return {"Current Time =", current_time}
 
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info")
+app.get("/say-bye")
+async def goodbye():
+    return {"message": "Goodbye World"}
