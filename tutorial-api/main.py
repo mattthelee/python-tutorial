@@ -15,6 +15,15 @@ def create_app():
         description="training server",
         version="0.0.1",
     )
+
+app = create_app()
+
+@app.get("/")
+async def main():
+    print('Hello ...')
+    time.sleep(5)
+    print('... World!')
+
     
 app.get("/say-hello")
 async def hello():
