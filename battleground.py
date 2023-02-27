@@ -48,8 +48,10 @@ class Battleground:
 
     def switch_character(self, character_one, character_two):
         # Take two characters, find them and switch their positions on the map
-        character_one_x, character_one_y = np.argwhere(self.map == character_one)[0]
-        character_two_x, character_two_y = np.argwhere(self.map == character_two)[0]
+        character_one_x, character_one_y = np.argwhere(
+            self.map == character_one)[0]
+        character_two_x, character_two_y = np.argwhere(
+            self.map == character_two)[0]
         self.map[character_one_x, character_one_y] = character_two
         self.map[character_two_x, character_two_y] = character_one
         return character_one, character_two
@@ -100,6 +102,7 @@ class Battleground:
                 print(self.character_dict[character_name])
                 new_destination_name = self.map[new_y, new_x]
                 print(self.character_dict[new_destination_name])
+
             self.map[new_y, new_x] = character_name
             self.map[y, x] = 0
         else:
@@ -198,6 +201,37 @@ class Battleground:
         else:
             print(f"The map is too small to move", character_name)
 
+    def character_fight(self, character_id):
+        y, x = self.find_first_instance_of_character(
+            character_id)  # current position + which character
+        new_x = x
+        new_y = y - 1  # where is the character moving
+        destination_id = self.map[new_y, new_x]  # id at position
+        check_id_is_nonzero = destination_id != 0
+        if check_id_is_nonzero:
+            moving_character = self.character_dict[character_id]
+            destination_character = self.character_dict[destination_id]
+            winner_of_fight = moving_character.fight(destination_character)
+            winner_id = winner_of_fight.map_id
+            self.map[new_y, new_x] = winner_id
+
+    def move_character_up(self, character_name):
+        max_y = self.map.shape[0] - 1
+        min_y = 0
+        y, x = self.find_first_instance_of_character(character_name)
+        new_x = x
+        new_y = y - 1
+        if new_y <= max_y and new_y >= min_y:
+            character_on_pos = self.map[new_y, new_x] != 0
+            if character_on_pos:
+                print(self.character_dict[character_name])
+                new_destination_name = self.map[new_y, new_x]
+                print(self.character_dict[new_destination_name])
+            self.map[new_y, new_x] = character_name
+            self.map[y, x] = 0
+        else:
+            print(f"The map is too small to move", character_name)
+
 
 # add characters to map
 # using move_character right/left etc, then if statement
@@ -208,3 +242,9 @@ class Battleground:
 # when we move a character we need to check if charcter already on positon
 # , if there is a a character they need to fight to determine the winner and the winner gets the spot
 # , the loser will then need to be removed or the winners number will just be visible
+
+
+# add character to map
+# move character using move_character methods
+# if new character lands on existing x/y then initate fight
+# loser of fight is eliminated from the map
