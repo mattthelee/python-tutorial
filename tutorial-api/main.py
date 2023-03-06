@@ -1,8 +1,10 @@
 from fastapi import FastAPI
-import uvicorn
 import time
 from datetime import datetime
+<<<<<<< HEAD
 from fastapi import FastAPI
+=======
+>>>>>>> main
 from pydantic import BaseModel
 from typing import Union
 
@@ -23,7 +25,17 @@ def create_app():
 
 app = create_app()
 
+<<<<<<< HEAD
 
+=======
+@app.get("/")
+async def main():
+    print('Hello ...')
+    time.sleep(5)
+    print('... World!')
+
+    
+>>>>>>> main
 @app.get("/say-hello")
 async def hello():
     return {"message": "Hello World"}
@@ -37,18 +49,30 @@ async def time():
 async def goodbye():
     return {"message": "Goodbye World"}
 
+<<<<<<< HEAD
+=======
+@app.get("/items/{item_id}")
+async def read_item(item_id):
+    return {"item_id": item_id}
+
+>>>>>>> main
 
 class Item(BaseModel):
     name: str
     description: Union[str, None] = None
     price: float
+<<<<<<< HEAD
     discount: Union[float, None] = None
     location: str
     stock: float
+=======
+    tax: Union[float, None] = None
+>>>>>>> main
 
 
 @app.post("/items/")
 async def create_item(item: Item):
+<<<<<<< HEAD
     return item
 
 
@@ -71,3 +95,6 @@ async def about():
     
     '''
     }
+=======
+    return item
+>>>>>>> main
