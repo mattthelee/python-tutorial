@@ -47,6 +47,8 @@ class Item(BaseModel):
 async def create_item(item: Item):
     return item
 
+
+@app.get("/items/sale")
 async def create_item_discount(item: Item):
     if item.stock <= 2:
        new_price = item.price / item.discount
