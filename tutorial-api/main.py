@@ -30,7 +30,7 @@ def create_app():
     app = FastAPI(
         title="Server",
         description="training server",
-        version="0.0.1",
+        version="0.0.1"
     )
     return app
 
@@ -60,23 +60,14 @@ async def time():
 async def goodbye():
     return {"message": "Goodbye World"}
 
-@app.get("/numbers/")
-async def read_item(skip: int = 0, limit: int = 10):
-    return numbers_db[skip : skip + limit]
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info")
-
-
-@app.get("/items/{item_id}")
-async def read_item(item_id):
-    return {"item_id": item_id}
-
 
 class Item(BaseModel):
     name: str
     description: Union[str, None] = None
     price: float
-    tax: Union[float, None] = None
+    discount: Union[float, None] = None
+    location: str
+    stock: float
 
 
 goodbye_msg = ["Goodbye", "See ya", "Auf Wiedersehen"]
@@ -92,10 +83,23 @@ async def goodbye(goodbye_msg):
 async def create_item(item: Item):
     return item
 
-@app.post("/users/")
-async def create_user(item: User):
-    return item
+
+@app.get("/items/sale")
+async def create_item_discount(item: Item):
+    if item.stock <= 2:
+       new_price = item.price / item.discount
+    return ({"Price with discount": new_price})
 
 
 
-# python -m uvicorn main:app --reload    - ignore this. it's just for easy copy/paste to run fastapi
+@app.get("/about")
+async def about():
+    return {'''
+
+
+    Welcome to this test server
+    Here you will see we have made an about page...
+    This is the first server we made :)
+    
+    '''
+    }
