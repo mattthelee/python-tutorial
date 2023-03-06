@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-import uvicorn
 import time
 from datetime import datetime
 from pydantic import BaseModel
