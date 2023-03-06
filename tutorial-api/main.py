@@ -11,6 +11,20 @@ now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
 print("Current Time =", current_time)
 
+class Item(BaseModel):
+    name: str
+    description: Union[str, None] = None
+    price: float
+    tax: Union[float, None] = None
+
+class User(BaseModel):
+    name: str
+    email: str
+    age: int
+    gender: str
+    
+numbers_db = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
 
 def create_app():
     app = FastAPI(
@@ -46,6 +60,9 @@ async def time():
 async def goodbye():
     return {"message": "Goodbye World"}
 
+@app.get("/numbers/")
+async def read_item(skip: int = 0, limit: int = 10):
+    return numbers_db[skip : skip + limit]
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info")
 
@@ -74,3 +91,11 @@ async def goodbye(goodbye_msg):
 @app.post("/items/")
 async def create_item(item: Item):
     return item
+
+@app.post("/users/")
+async def create_user(item: User):
+    return item
+
+
+
+# python -m uvicorn main:app --reload    - ignore this. it's just for easy copy/paste to run fastapi
