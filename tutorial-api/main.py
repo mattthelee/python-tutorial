@@ -19,7 +19,11 @@ def create_app():
         description="training server",
         version="0.0.1"
     )
-    
+    return app
+
+app = create_app()
+
+
 @app.get("/say-hello")
 async def hello():
     return {"message": "Hello World"}
