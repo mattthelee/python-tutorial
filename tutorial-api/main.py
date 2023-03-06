@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-import uvicorn
 import time
 import random
 from datetime import datetime
 from typing import Union
 from pydantic import BaseModel
+import uvicorn
 
 now = datetime.now()
 
@@ -24,14 +24,35 @@ def create_app():
 app = create_app()
 
 
+@app.get("/")
+async def main():
+    print('Hello ...')
+    time.sleep(5)
+    print('... World!')
+
+
+@app.get("/say-hello")
+async def hello():
+    return {"message": "Hello World"}
+
+
 @app.get("/time")
 async def time():
     current_time = now.strftime("%H:%M:%S")
     return {"Current Time =", current_time}
 
 
+@app.get("/say-bye")
+async def goodbye():
+    return {"message": "Goodbye World"}
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info")
+
+
+@app.get("/items/{item_id}")
+async def read_item(item_id):
+    return {"item_id": item_id}
 
 
 class Item(BaseModel):
