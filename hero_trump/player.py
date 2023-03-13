@@ -27,7 +27,7 @@ class Player:
 
     def get_elo(self):
         elo_rating = self.calc_elo()
-        print(f"Players Elo rating: {elo_rating}")
+        print(f"{self.username}s Elo rating: {elo_rating}")
 
 
         
@@ -50,3 +50,6 @@ class MatchPlayers:
         players_for_game = random.sample(player_list, 2)
         return players_for_game
 
+
+liam = Player('Liam')
+liam.get_elo()
