@@ -1,7 +1,25 @@
-
+from fastapi import FastAPI
+import uvicorn
 import random
 import csv
 import re
+
+
+def create_app():
+    app = FastAPI(
+        title="Server",
+        description="training server",
+        version="0.0.1"
+    )
+    return app
+
+
+app = create_app()
+
+@app.get("/get-user-cards")
+async def get_cards():
+    return "Current Cards"
+
 
 
 class Player:
