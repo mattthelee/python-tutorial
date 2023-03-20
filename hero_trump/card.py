@@ -1,6 +1,11 @@
+import random
+from fastapi import FastAPI
+from typing import Union
+from pydantic import BaseModel
+import uvicorn
 import csv
 
-class Card:
+class Card():
     def __init__(
         self,
         name=str,
@@ -26,23 +31,24 @@ class Card:
         self.tools = tools
         self.present = present
 
+    def __str__(self):
+        return (self.name)
 
-    def assign_card(self):
-        with open('Cards.txt') as f:
-            lines = f.readlines()
-            num = self.number
-            splitlines  = lines[num].split(',')
-            self.name = splitlines[0]
-            self.number = splitlines[1]
-            self.category = splitlines[2]
-            self.strength = splitlines[3]
-            self.intelligence = splitlines[4]
-            self.defense = splitlines[5]
-            self.power = splitlines[6]
-            self.magic = splitlines[7]
-            self.tools = splitlines[8]
-            self.present=True,
-    
+    def __repr__(self):
+        return str(self.name)
+
+    def assign_card(self, row):
+        self.name = row[0]
+        self.number = row[1]
+        self.category = row[2]
+        self.strength = row[3]
+        self.intelligence = row[4]
+        self.defense = row[5]
+        self.power = row[6]
+        self.magic = row[7]
+        self.tools = row[8]
+        self.present=True
+
     def card_info(self):
         print(self.name, "is a", self.category, "and their stats are:""\n"
               "Strength:", self.strength,"\n"
@@ -53,27 +59,90 @@ class Card:
               "Tools:", self.tools,
               )
 
-c1 = Card("null", 0, "null", 0, 0, 0, 0, 0, 0, False)
-c2 = Card("null", 1, "null", 0, 0, 0, 0, 0, 0, False)
-c3 = Card("null", 2, "null", 0, 0, 0, 0, 0, 0, False)
-c4 = Card("null", 3, "null", 0, 0, 0, 0, 0, 0, False)
-c5 = Card("null", 4, "null", 0, 0, 0, 0, 0, 0, False)
-c6 = Card("null", 5, "null", 0, 0, 0, 0, 0, 0, False)
-c7 = Card("null", 6, "null", 0, 0, 0, 0, 0, 0, False)
-c8 = Card("null", 7, "null", 0, 0, 0, 0, 0, 0, False)
-c9 = Card("null", 8, "null", 0, 0, 0, 0, 0, 0, False)
-c10 = Card("null", 9, "null", 0, 0, 0, 0, 0, 0, False)
+class Deck:
+    def __init__(
+        self,
+        cards,
+    ):
+        self.cards = cards
+        self.length = len(cards)
 
-c1.assign_card()
-c2.assign_card()
-c3.assign_card()
-c4.assign_card()
-c5.assign_card()
-c6.assign_card()
-c7.assign_card()
-c8.assign_card()
-c9.assign_card()
-c10.assign_card()
+    def read_cards(self):
+        with open('Cards.csv', 'r') as file:  
+            reader = csv.reader(file)
+            for row in reader:
+                newcard = Card()
+                newcard.assign_card(row)
+                cards.append(newcard)
 
-c4.card_info()
+    def add_card(new_card):
+        i = new_card
+        if i in cards:
+            print("This card is already in the deck.")
+        else:
+            cards.append(new_card)
+
+    def remove_card(card_to_remove):
+        i = card_to_remove
+        if i in cards:
+            cards.remove(card_to_remove)
+        else:
+            print("This card is already not in the deck.")
+
+    def find_card(card_to_find):
+        i = card_to_find
+        if i in cards:
+            print(card_to_find)
+        else:
+            print(card_to_find, "cannot be found in the deck.")
+
+    def shuffle_cards():
+        random.shuffle(cards)
+
+
+cards = []
+
+mydeck = Deck(cards)
+
+mydeck.read_cards()
+
+print(cards)
+
+Deck.find_card(cards[2])     #test for finding a card in the deck
+
+Deck.shuffle_cards()    #test for shuffling cards
+
+print(cards[2].category)
+
+Deck.remove_card(cards[5])   #test for removing a card from the deck
+
+print(cards)
+
+
+def create_app():
+    app = FastAPI(
+        title="Server",
+        description="database for cards",
+        version="0.0.1"
+    )
+    return app
+
+app = create_app()
+
+@app.get("/hello")
+async def main():
+    return("Welcome!")
+
+@app.get("/card/")
+async def show_cards(card: Card):
+    return card
+
+@app.post("/cards/")
+async def create_card(card: Card):
+   Deck.add_card(card)
+   return card
+
+
+
+# python -m uvicorn card:app --reload     --------------------------- command for running API
 
