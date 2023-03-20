@@ -1,11 +1,31 @@
-
+from fastapi import FastAPI
+import uvicorn
 import random
+import csv
+import re
+
+
+def create_app():
+    app = FastAPI(
+        title="Server",
+        description="training server",
+        version="0.0.1"
+    )
+    return app
+
+
+app = create_app()
+
+@app.get("/get-user-cards")
+async def get_cards():
+    return "Current Cards"
+
+
 
 class Player:
     def __init__(self, username):
         self.username = username
         self.record = {'wins': 0, 'losses': 0, 'draws': 0}
-        self.current_cards = []
         self.last_five_games = []
         self.elo = self.calc_elo()
     
@@ -13,40 +33,127 @@ class Player:
         print(f"{self.username}'s current record is {self.record['wins']}-{self.record['losses']}-{self.record['draws']}")
 
 
-    def calc_elo(self, k_factor=32, initial_rating=1200):
-        wins = self.record['wins']
-        losses = self.record['losses']
-        draws = self.record['draws']
-        rating = initial_rating
-
-        if wins + losses + draws == 0:
-            return rating
-        expected_score = (wins + 0.5 * draws) / (wins + losses + draws)
-        rating += k_factor * (wins - expected_score * (wins + losses + draws))
-        return int(rating)
-
-    def get_elo(self):
-        elo_rating = self.calc_elo()
-        print(f"Players Elo rating: {elo_rating}")
-
-
+    def create_player(username, wins=0, losses=0, draws=0):
+    # Open the CSV file in append mode
+        with open('players.csv', 'a', newline='') as csvfile:
+        # Create a CSV writer object
+            writer = csv.writer(csvfile, delimiter=',')
+        # Write the new player's data to the file
+            writer.writerow([username, f'Wins: {wins}, Losses: {losses}, Draws: {draws}'])
         
 
 
-class MatchPlayers:
 
-    def __init__(self, record, last_five_games):
-        self.record = record
-        self.last_five_games = last_five_games
+class PlayerDatabase2:
+    def __init__(self):
+        self.data = {}
+        self.load_dbase()
+ 
+    def load_dbase(self):
+        with open('players.csv', 'r') as csvfile:
+            csvreader = csv.reader(csvfile)
+            next(csvreader)
+            for row in csvreader:
+                username = row[0]
+                record_str = row[1]
+                record_parts = [part.strip() for part in record_str.split(",")] 
+                wins = record_parts[0].split(":")[1].strip()
+                losses = record_parts[1].split(":")[1].strip()
+                draws = record_parts[2].split(":")[1].strip()
+                record = f"Wins: {wins}, Losses: {losses}, Draws: {draws}"
+                self.data[username] = record
+            
+    def print_all(self):
+        for username, record in self.data.items():
+                print(f'{username}: {record}')
 
+    def indiv_rec(self, username):
+        if username in self.data:
+            record = self.data[username]
+            print(f"{username}: {record}")
 
-    def match_players(self, player_list_elo1, player_list_elo2, last_five_games):
-        if last_five_games.count('win') <= 3:
-            player_list_elo1.append(self)
         else:
-            player_list_elo2.append(self)
+            print(f"No record found for user {username}")
 
-    def find_opposition(self, player_list):
-        players_for_game = random.sample(player_list, 2)
-        return players_for_game
+                           
 
+    def get_elo(self, username, initial_rating=1200, k_factor=32):
+        rating = initial_rating
+        username = username  # Replace with the actual player's username
+        record = self.data.get(username)
+        if username in self.data:
+            wins = int(record.split(",")[0].split(":")[1])
+            losses = int(record.split(",")[1].split(":")[1])
+            draws = int(record.split(",")[2].split(":")[1])
+            for i in range(wins):
+                rating += k_factor * (1 - 1 / (1 + 10 ** ((1200 - rating) / 400)))
+            for i in range(losses):
+                rating += k_factor * (0 - 1 / (1 + 10 ** ((1200 - rating) / 400)))
+            for i in range(draws):
+                rating += k_factor * (0.5 - 1 / (1 + 10 ** ((1200 - rating) / 400)))
+            return rating
+
+        else:
+            return
+
+
+
+            
+    def print_elo(self, username):
+        rating = self.get_elo(username)  # calculate Elo rating
+        if username in self.data:
+            print(f"{username}'s ELO is: {rating}")
+            return rating
+        
+        else:
+            print(f"No record found for user {username}")
+
+
+
+
+
+class MatchMaking:
+    def __init__(self, player_db):
+        self.player_db = player_db
+        player_db = PlayerDatabase2()
+
+    def find_opponent(self, player_name):
+        player_elo = self.player_db.get_elo(player_name)
+
+        # Find the opponent with the closest ELO to the player
+        closest_elo_diff = float('inf')
+        closest_opponent = None
+        for opponent_name, _ in self.player_db.data.items():
+            if opponent_name == player_name:
+                continue
+            opponent_elo = self.player_db.get_elo(opponent_name)
+            elo_diff = abs(player_elo - opponent_elo)
+            if elo_diff < closest_elo_diff:
+                closest_elo_diff = elo_diff
+                closest_opponent = opponent_name
+
+        return closest_opponent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pd = PlayerDatabase2()
+
+
+mm = MatchMaking(pd)
+
+Player.create_player("Jamie")
+pd.print_elo("Liam")
+pd.print_elo("Alice")
+pd.print_elo("Ringo")
+pd.print_all()
